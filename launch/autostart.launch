@@ -1,0 +1,12 @@
+<launch>
+
+	<!-- Measure DS18B20 devices, example -->
+	<arg name="onewire_names" default=""/> <!--"motor_left, motor_right"-->
+	<arg name="onewire_addresses" default=""/> <!--"28-9809be0164ff, 28-a99dbd0164ff"-->
+	
+	<node name="temperature_node" pkg="ezpkg_onewiretemp" type="temperature.py"  output="screen">
+		<param name="onewire_names" value="$(arg onewire_names)"/>
+		<param name="onewire_addresses" value="$(arg onewire_addresses)"/>		
+	</node>
+
+</launch>
