@@ -49,8 +49,6 @@ class Temperature{
 
 		avgtemp /= keys.length;
 
-		console.log(avgtemp)
-
 		let img = "hot";
 
 		if(avgtemp < 10){
