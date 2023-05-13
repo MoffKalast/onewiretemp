@@ -1,9 +1,9 @@
 <package format="2">
-	<name>ezpkg_onewiretemp</name>
+	<name>onewiretemp</name>
 	<version>0.0.1</version>
-	<description>Temperature widget for EZ-Map.</description>
+	<description>One wire temperature ROS driver.</description>
 
-	<maintainer email="vr@ubiquityrobotics.org">Vid Rijavec</maintainer>
+	<maintainer email="vid.rijavec@gmail.com">Vid Rijavec</maintainer>
 
 	<author>Vid Rijavec</author>
 

@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-
 import rospy
 import time
 import os
 
-from std_msgs.msg import Float32
+from sensor_msgs.msg import Temperature
 
 RPI_CPU_PATH = "/sys/class/thermal/thermal_zone0/temp"
 ONEWIRE_PATH = "/sys/bus/w1/devices"
 
-class Temperature:
+class TemperatureNode:
 	def __init__(self):
 		rospy.init_node('temperature_node')
 
@@ -26,10 +25,10 @@ class Temperature:
 
 		self.onewire_pub = {}
 		for key in self.onewires:
-			self.onewire_pub[key] = self.pub = rospy.Publisher('temp/'+key, Float32, queue_size=1)
+			self.onewire_pub[key] = self.pub = rospy.Publisher('temp/'+key, Temperature, queue_size=1)
 
 
-		self.cpu_pub = rospy.Publisher('temp/cpu', Float32, queue_size=1)
+		self.cpu_pub = rospy.Publisher('temp/cpu', Temperature, queue_size=1)
 
 	def read_temperature(self, path):
 		val = 0.0
@@ -42,17 +41,24 @@ class Temperature:
 
 	def update(self):
 		if os.path.exists(RPI_CPU_PATH):
-			self.cpu_pub.publish(self.read_temperature(RPI_CPU_PATH))
+			temp_msg = Temperature()
+			temp_msg.temperature = self.read_temperature(RPI_CPU_PATH)
+			temp_msg.variance = 0.0
+			self.cpu_pub.publish(temp_msg)
 
 		for key in self.onewires:
 			path = ONEWIRE_PATH+"/"+self.onewires[key]+"/temperature"
 
 			if os.path.exists(path):
-				self.onewire_pub[key].publish(self.read_temperature(path))
+				temp_msg = Temperature()
+				temp_msg.temperature = self.read_temperature(path)
+				temp_msg.variance = 0.0
+				self.onewire_pub[key].publish(temp_msg)
+
 
 try:
 
-	temp = Temperature()
+	temp = TemperatureNode()
 	rate = rospy.Rate(0.7)
 	while not rospy.is_shutdown():
 		temp.update()
