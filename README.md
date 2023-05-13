@@ -1,10 +1,8 @@
-# Temperature Node
+# One Wire Temperature
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ROS node for reading temperatures from different sensors and publishes them as `sensor_msgs/Temperature` messages. It is designed to work with DS18B20 1-wire temperature sensors, but also reads a Raspberry Pi's CPU temperature sensor if running on a Pi.
-
-![demo image](demo.gif)
 
 ## Params
 
