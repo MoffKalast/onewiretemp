@@ -36,3 +36,7 @@ For each 1-wire sensor, this node will publish a `sensor_msgs/Temperature` messa
 - `/temp/<sensor_name>` (`sensor_msgs/Temperature`): The temperature of the 1-wire sensor with the given name. There will be one of these topics for each 1-wire sensor.
 
 Note: The `sensor_msgs/Temperature` message includes fields for the temperature in Celsius and the variance. The variance field is currently not used and is set to 0.0 in all published messages. The header field is also not populated. Depending on your application, you might want to modify the node to populate these fields.
+
+## Finding DS18B20 Addresses
+
+The addresses specified as the params are the unique hardware addresses of the sensors. If you are using a Raspberry Pi and have connected 1-wire sensors to it (the 1-wire interface must be enabled in the `/boot/config.txt`), you can find these addresses by accessing the 1-wire device files in the `/sys/bus/w1/devices/` directory. Each subdirectory's name should be the address of a connected sensor. A simple way of figuring out which one is which is to heat one of the sensors and observe which address value changes in temperature.
